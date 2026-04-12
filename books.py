@@ -11,7 +11,7 @@ def book_recommender():
 
     @st.cache_data(ttl=3600)
     def fetch_trending_books():
-        API_KEY = "AIzaSyDkTnH2T-bnd37tE_dCjtnl61Bji7d1Vws"
+        API_KEY = "enter_your_api_key"
         url = f"https://www.googleapis.com/books/v1/volumes?q=subject:fiction&maxResults=20&key={API_KEY}"
         try:
             response = requests.get(url)
