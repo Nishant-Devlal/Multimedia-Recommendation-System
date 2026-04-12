@@ -5,7 +5,7 @@ import requests
 
 def movie_recommender():
     def fetch_trending_movies():
-        API_KEY="fea170440f16f94204650235a68988d0"
+        API_KEY="enter_your_api_key"
         url = f"https://api.themoviedb.org/3/trending/movie/day?api_key={API_KEY}"
         try:
             response = requests.get(url)
