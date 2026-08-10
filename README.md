@@ -14,6 +14,10 @@ Use all these API keys then the project will run.
 
 Note: To use Spotify api i.e spotipy, you will need premium subscription of Spotify.
 
+# Architecture Diagram
+<img width="381" height="431" alt="image" src="https://github.com/user-attachments/assets/a88161c4-72b4-454b-9e86-f8bedf880eee" />
+
+
 # Screenshots
 1. Home Page:
     <img width="1566" height="725" alt="image" src="https://github.com/user-attachments/assets/b780e2d3-8f25-49d7-9d9c-444cca4a7c9f" />
