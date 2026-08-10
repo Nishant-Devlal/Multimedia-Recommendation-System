@@ -18,11 +18,11 @@ Note: To use Spotify api i.e spotipy, you will need premium subscription of Spot
 <img width="381" height="431" alt="image" src="https://github.com/user-attachments/assets/a88161c4-72b4-454b-9e86-f8bedf880eee" />
 
 # Evaluation Matrices
-Recall@10
-r@10=|Relevant Items ∩ Top 10 recommendations| / |Relevant Items|
-For songs r@10=0.6
-For movies r@10=0.8
-For books r@10=0.5
+Recall@10  
+r@10=|Relevant Items ∩ Top 10 recommendations| / |Relevant Items|  
+For songs r@10=0.6  
+For movies r@10=0.8  
+For books r@10=0.5  
 
 # Screenshots
 1. Home Page:
