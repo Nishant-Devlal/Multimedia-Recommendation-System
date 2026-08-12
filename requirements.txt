@@ -2,6 +2,7 @@ streamlit
 numpy
 pandas
 requests
-spotipy
-spotipy.oauth2
 pickle
+scikit-learn
+nltk
+spotipy
