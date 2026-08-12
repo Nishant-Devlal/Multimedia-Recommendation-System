@@ -4,8 +4,8 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
 def song_recommender():
-    CLIENT_ID = "enter_your_client_id"
-    CLIENT_SECRET = "enter_your_client_secret"
+    CLIENT_ID = st.secrets["SPOTIFY_CLIENT_ID"]
+    CLIENT_SECRET = st.secrets["SPOTIFY_CLIENT_SECRET"]
 
     client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
