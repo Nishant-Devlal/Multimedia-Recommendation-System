@@ -2,7 +2,6 @@ streamlit
 numpy
 pandas
 requests==2.34.2
-pickle
 scikit-learn
 nltk
 spotipy
