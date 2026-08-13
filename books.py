@@ -11,57 +11,25 @@ def book_recommender():
 
     @st.cache_data(ttl=3600)
     def fetch_trending_books():
+        API_KEY = st.secrets["GOOGLE_BOOKS_API_KEY"]
+        url = f"https://www.googleapis.com/books/v1/volumes?q=subject:fiction&maxResults=20&key={API_KEY}"
         try:
-            API_KEY = st.secrets["GOOGLE_BOOKS_API_KEY"]
-            url = "https://www.googleapis.com/books/v1/volumes"
-            params = {
-                "q": "subject:fiction",
-                "maxResults": 20,
-                "key": API_KEY
-            }
-            response = requests.get(url, params=params, timeout=10)
-
-            if response.status_code != 200:
-                st.error(
-                    f"Google Books API Error "
-                    f"{response.status_code}: {response.text}"
-                )
-                return []
-
+            response = requests.get(url)
+            response.raise_for_status()
             data = response.json()
             books = []
-
-            for item in data.get("items", []):
-                volume = item.get("volumeInfo", {})
-                image_links = volume.get("imageLinks", {})
-                cover = image_links.get("thumbnail", "https://via.placeholder.com/150x220?text=No+Image")
-
-                cover = cover.replace("http://", "https://")
+            items = data.get('items', [])
+            for item in items:
+                volume = item.get('volumeInfo', {})
                 books.append({
-                    "title": volume.get(
-                        "title",
-                        "Unknown Title"
-                    ),
-
-                    "author": ", ".join(volume.get("authors", [])) if volume.get("authors")
-                    else "Unknown Author", "cover": cover, "link":
-                        volume.get("infoLink", "#")
+                    "title": volume.get('title', 'Unknown Title'),
+                    "author": ", ".join(volume.get('authors', [])) if 'authors' in volume else "Unknown Author",
+                    "cover": volume.get('imageLinks', {}).get('thumbnail', "https://via.placeholder.com/150x220?text=No+Image"),
+                    "link": volume.get('infoLink', "#")
                 })
             return books
-
-        except KeyError:
-            st.error(
-                "GOOGLE_BOOKS_API_KEY is missing from "
-                "Streamlit Secrets."
-            )
-            return []
-
-        except requests.exceptions.RequestException as e:
-            st.error(f"Could not connect to Google Books API: {e}")
-            return []
-
         except Exception as e:
-            st.error(f"Unexpected error fetching books: {e}")
+            st.error(f"Error fetching books: {e}")
             return []
 
     def recommend(book_name):
