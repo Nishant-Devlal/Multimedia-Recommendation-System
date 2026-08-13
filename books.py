@@ -28,8 +28,8 @@ def book_recommender():
                     "link": volume.get('infoLink', "#")
                 })
             return books
-        except Exception as e:
-            st.error(f"Error fetching books: {e}")
+        except requests.exceptions.HTTPError as e:
+            st.error("Error fetching books from Google Books API.")
             return []
 
     def recommend(book_name):
