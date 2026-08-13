@@ -46,18 +46,6 @@ def song_recommender():
             links.append(track_url)
         return names, posters, links
 
-    def recommend_by_mood(mood):
-        mood_songs = english_music[english_music['mood'].str.lower() == mood.lower()]
-        recommended_music_names = []
-        recommended_music_posters = []
-        recommended_music_links = []
-        for i, row in mood_songs.head(30).iterrows():
-            album_cover_url, track_url = get_song_album_cover_and_url(row['song'], row['artist'])
-            recommended_music_names.append(row['song'])
-            recommended_music_posters.append(album_cover_url)
-            recommended_music_links.append(track_url)
-        return recommended_music_names, recommended_music_posters, recommended_music_links
-
     hindi_music = pickle.load(open("Hindi/hindi_df", "rb"))
     hindi_similarity = pickle.load(open("Hindi/hindi_similarity", "rb"))
     english_music = pickle.load(open("English/english_df", "rb"))
@@ -176,25 +164,5 @@ def song_recommender():
                             <img src="{posters[i]}" width="150" style='border-radius:8px'><br>
                             <strong style='color:{text_color}'>{names[i]}</strong><br>
                             <a href="{links[i]}" target="_blank" style='color:{button_hover};'>🎧 Listen on Spotify</a>
-                        </div>
-                        """, unsafe_allow_html=True)
-
-        mood_choice = st.radio("Choose Mood", ["Happy", "Sad", "Calm"], horizontal=True)
-
-        if st.button("Recommend by Mood"):
-            with st.spinner(f"Fetching {mood_choice} songs..."):
-                recommended_music_names, recommended_music_posters, recommended_music_links = recommend_by_mood(mood_choice)
-            cols = st.columns(5)
-            for i in range(len(recommended_music_names)):
-                with cols[i % 5]:
-                    st.markdown(f"""
-                        <div style='
-                            background-color: {card_bg};
-                            padding: 10px;
-                            border-radius: 10px;
-                            text-align: center; '>
-                            <img src="{recommended_music_posters[i]}" width="150" style='border-radius: 8px'><br>
-                            <strong style='color: {text_color}'>{recommended_music_names[i]}</strong><br>
-                            <a href="{recommended_music_links[i]}" target="_blank" style='color: {button_hover};'>🎧 Listen on Spotify</a>
                         </div>
                         """, unsafe_allow_html=True)
