@@ -37,5 +37,4 @@ For books r@10=0.5
 4. Book Recommender:
    <img width="1566" height="722" alt="image" src="https://github.com/user-attachments/assets/fb0a3f47-a6f7-4327-8bd3-a2d385eb1e34" />
 
-
-
+Try here: https://multimedia-recommendation-system-by-nishant-devlal.streamlit.app/
