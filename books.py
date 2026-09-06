@@ -65,7 +65,7 @@ def book_recommender():
             </style>
         """, unsafe_allow_html=True)
 
-    tab1, tab2, tab3 = st.tabs(["Trending Books", "Popular Books", "Recommend Books"])
+    tab1, tab2, tab3 = st.tabs(["Popular Books", "Recommend Books"])
 
     st.markdown("""
         <style>
