@@ -10,27 +10,6 @@ def book_recommender():
     books = pickle.load(open("books.pkl", "rb"))
 
     @st.cache_data(ttl=3600)
-    def fetch_trending_books():
-        API_KEY = st.secrets["GOOGLE_BOOKS_API_KEY"]
-        url = f"https://www.googleapis.com/books/v1/volumes?q=subject:fiction&maxResults=20&key={API_KEY}"
-        try:
-            response = requests.get(url)
-            response.raise_for_status()
-            data = response.json()
-            books = []
-            items = data.get('items', [])
-            for item in items:
-                volume = item.get('volumeInfo', {})
-                books.append({
-                    "title": volume.get('title', 'Unknown Title'),
-                    "author": ", ".join(volume.get('authors', [])) if 'authors' in volume else "Unknown Author",
-                    "cover": volume.get('imageLinks', {}).get('thumbnail', "https://via.placeholder.com/150x220?text=No+Image"),
-                    "link": volume.get('infoLink', "#")
-                })
-            return books
-        except requests.exceptions.HTTPError as e:
-            st.error("Error fetching books from Google Books API.")
-            return []
 
     def recommend(book_name):
         matches = np.where(pt.index == book_name)[0]
@@ -111,30 +90,6 @@ def book_recommender():
     """, unsafe_allow_html=True)
 
     with tab1:
-        st.markdown(f"<h2 style='color:{button_color}; text-align:center;'>Book Recommender</h2>", unsafe_allow_html=True)
-        st.subheader("🔥 Trending Books")
-        trending_books = fetch_trending_books()
-        for row in range((len(trending_books) // 5) + 1):
-            cols = st.columns(5)
-            for i in range(5):
-                idx = row * 5 + i
-                if idx < len(trending_books):
-                    with cols[i]:
-                        st.markdown(f"""
-                                <div style='
-                                    background-color:{card_bg};
-                                    padding:10px;
-                                    border-radius:10px;
-                                    text-align:center;'>
-                                    <img src="{trending_books[idx]['cover']}" width="120" style='border-radius:8px'><br>
-                                    <strong style='color:{text_color}'>{trending_books[idx]['title']}</strong><br>
-                                    <em style='color:{button_color}'>{trending_books[idx]['author']}</em><br>
-                                    <a href="{trending_books[idx]['link']}" target="_blank"
-                                       style='color:{button_hover}; font-weight:bold;'>📖 View Details</a>
-                                </div>
-                            """, unsafe_allow_html=True)
-
-    with tab2:
         st.markdown(f"<h2 style='color:{button_color}; text-align:center;'>Most Popular Books</h2>", unsafe_allow_html=True)
         st.markdown(f"""
             <style>
@@ -190,7 +145,7 @@ def book_recommender():
                             </a>
                             """, unsafe_allow_html=True)
 
-    with tab3:
+    with tab2:
         st.markdown(f"<h2 style='color:{button_color}; text-align:center;'>Find Similar Books</h2>", unsafe_allow_html=True)
         selected_book = st.selectbox("Select a book:", pt.index)
 
