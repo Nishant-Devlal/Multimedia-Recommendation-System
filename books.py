@@ -15,8 +15,6 @@ def book_recommender():
         url = f"https://www.googleapis.com/books/v1/volumes?q=subject:fiction&maxResults=20&key={API_KEY}"
         try:
             response = requests.get(url)
-            st.write(response.status_code, response.text)
-
             response.raise_for_status()
             data = response.json()
             books = []
