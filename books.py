@@ -9,8 +9,6 @@ def book_recommender():
     similarity_scores = pickle.load(open("Similarity_scores.pkl", "rb"))
     books = pickle.load(open("books.pkl", "rb"))
 
-    @st.cache_data(ttl=3600)
-
     def recommend(book_name):
         matches = np.where(pt.index == book_name)[0]
         if len(matches) == 0:
@@ -65,7 +63,7 @@ def book_recommender():
             </style>
         """, unsafe_allow_html=True)
 
-    tab1, tab2, tab3 = st.tabs(["Popular Books", "Recommend Books"])
+    tab1, tab2 = st.tabs(["Popular Books", "Recommend Books"])
 
     st.markdown("""
         <style>
